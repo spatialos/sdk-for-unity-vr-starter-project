@@ -1,0 +1,9 @@
+package improbable.general;
+
+import "improbable/global/Quaternion.schema";
+
+component WorldTransform {
+    id = 1000;
+    EntityPosition position = 1;
+    improbable.global.Quaternion rotation = 2;
+}

@@ -1,0 +1,160 @@
+{
+  "build": {
+    "tasks_filename": "spatialos.unity.worker.build.json",
+    "generated_build_scripts_type": "unity"
+  },
+  "bridge": {
+    "worker_attribute_set": {
+      "attributes": [
+        "physics"
+      ]
+    },
+    "entity_interest": {
+      "range_entity_interest": {
+        "radius": 200
+      }
+    },
+    "streaming_query": [],
+    "component_delivery": {
+      "default": "RELIABLE_ORDERED",
+      "checkout_all_initially": true
+    }
+  },
+  "managed": {
+    "linux": {
+      "artifact_name": "UnityWorker@Linux.zip",
+      "command": "UnityWorker@Linux",
+      "arguments": [
+        "+appName",
+        "${IMPROBABLE_PROJECT_NAME}",
+        "+receptionistIp",
+        "${IMPROBABLE_RECEPTIONIST_IP}",
+        "+receptionistPort",
+        "${IMPROBABLE_RECEPTIONIST_PORT}",
+        "+workerType",
+        "${IMPROBABLE_WORKER_NAME}",
+        "+workerId",
+        "${IMPROBABLE_WORKER_ID}",
+        "+useInternalIpForBridge",
+        "true",
+        "+infraServicesUrl",
+        "${IMPROBABLE_API_URL}",
+        "+assemblyName",
+        "${IMPROBABLE_ASSEMBLY_NAME}",
+        "+linkProtocol",
+        "RakNet",
+        "-logfile",
+        "${IMPROBABLE_LOG_FILE}",
+        "-batchmode",
+        "-nographics",
+        "-vrmode",
+        "None"
+      ]
+    },
+    "windows": {
+      "artifact_name": "UnityWorker@Windows.zip",
+      "command": "UnityWorker@Windows.exe",
+      "arguments": [
+        "+appName",
+        "${IMPROBABLE_PROJECT_NAME}",
+        "+receptionistIp",
+        "${IMPROBABLE_RECEPTIONIST_IP}",
+        "+receptionistPort",
+        "${IMPROBABLE_RECEPTIONIST_PORT}",
+        "+workerType",
+        "${IMPROBABLE_WORKER_NAME}",
+        "+workerId",
+        "${IMPROBABLE_WORKER_ID}",
+        "+useInternalIpForBridge",
+        "true",
+        "+infraServicesUrl",
+        "${IMPROBABLE_API_URL}",
+        "+assemblyName",
+        "${IMPROBABLE_ASSEMBLY_NAME}",
+        "+linkProtocol",
+        "RakNet",
+        "-logfile",
+        "${IMPROBABLE_LOG_FILE}",
+        "-batchmode",
+        "-nographics",
+        "-vrmode",
+        "None"
+      ]
+    },
+    "macos": {
+      "artifact_name": "UnityWorker@Mac.zip",
+      "command": "UnityWorker@Mac.app/Contents/MacOS/UnityWorker@Mac",
+      "arguments": [
+        "+appName",
+        "${IMPROBABLE_PROJECT_NAME}",
+        "+receptionistIp",
+        "${IMPROBABLE_RECEPTIONIST_IP}",
+        "+receptionistPort",
+        "${IMPROBABLE_RECEPTIONIST_PORT}",
+        "+workerType",
+        "${IMPROBABLE_WORKER_NAME}",
+        "+workerId",
+        "${IMPROBABLE_WORKER_ID}",
+        "+useInternalIpForBridge",
+        "true",
+        "+infraServicesUrl",
+        "${IMPROBABLE_API_URL}",
+        "+assemblyName",
+        "${IMPROBABLE_ASSEMBLY_NAME}",
+        "+linkProtocol",
+        "RakNet",
+        "-logfile",
+        "${IMPROBABLE_LOG_FILE}",
+        "-batchmode",
+        "-nographics",
+        "-vrmode",
+        "None"
+      ]
+    }
+  },
+  "external": {
+    "default": {
+      "run_type": "EXECUTABLE",
+      "windows": {
+        "command": "build/worker/UnityWorker@Windows/UnityWorker@Windows.exe",
+        "arguments": [
+          "+assemblyName",
+          "local_assembly",
+          "+workerType",
+          "UnityWorker",
+          "+infraServicesUrl",
+          "http://127.0.0.1:21000",
+          "+appName",
+          "${IMPROBABLE_PROJECT_NAME}",
+          "-batchmode",
+          "-nographics",
+          "-logfile",
+          "external-default-unityworker.log",
+          "-vrmode",
+          "None"
+        ]
+      },
+      "macos": {
+        "command": "open",
+        "arguments": [
+          "./build/worker/UnityWorker@Mac/UnityWorker@Mac.app",
+          "--args",
+          "+assemblyName",
+          "local_assembly",
+          "+workerType",
+          "UnityWorker",
+          "+infraServicesUrl",
+          "http://127.0.0.1:21000",
+          "+appName",
+          "${IMPROBABLE_PROJECT_NAME}",
+          "-batchmode",
+          "-nographics",
+          "-logfile",
+          "external-default-unityworker.log",
+          "-vrmode",
+          "None"
+        ]
+      }
+    }
+  }
+}

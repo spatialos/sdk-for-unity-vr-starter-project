@@ -1,0 +1,43 @@
+{
+  "template": "small",
+  "world": {
+    "chunkEdgeLengthMeters": 50,
+    "snapshots": {
+      "snapshotWritePeriodSeconds": 0
+    },
+    "dimensions": {
+      "xMeters": 1500,
+      "zMeters": 1500
+    }
+  },
+  "workers": [
+    {
+      "worker_type": "UnityWorker",
+      "load_balancing": {
+        "auto_hex_grid": {
+          "num_workers": 1
+         }
+      },
+      "permissions": [{
+        "all": {}
+      }]
+    },
+    {
+      "worker_type": "UnityClient",
+      "permissions": [{
+        "entity_creation": {
+          "allow": false
+        },
+        "entity_deletion": {
+          "allow": false
+        },
+        "entity_query": {
+          "allow": true,
+          "components": [
+              "*"
+          ]
+        }
+      }]
+    }
+  ]
+}

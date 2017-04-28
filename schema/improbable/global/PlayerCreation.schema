@@ -1,0 +1,16 @@
+package improbable.global;
+
+enum PlayerType {
+	VRPLAYER = 0;
+	SPECTATORPLAYER = 1;
+}
+
+type CreatePlayerRequest {
+	PlayerType player_type = 1;
+}
+type CreatePlayerResponse {}
+
+component PlayerCreation {
+  id = 1001;
+  command CreatePlayerResponse create_player(CreatePlayerRequest);
+}

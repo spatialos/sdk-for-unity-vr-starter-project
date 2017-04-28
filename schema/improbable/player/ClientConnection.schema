@@ -1,0 +1,14 @@
+package improbable.player;
+
+type ClientDisconnectRequest{}
+type ClientDisconnectResponse{}
+
+type HeartbeatRequest{}
+type HeartbeatResponse{}
+
+component ClientConnection {
+  id = 1003;
+  uint32 timeout_beats_remaining = 1;
+  command HeartbeatResponse heartbeat(HeartbeatRequest);
+  command ClientDisconnectResponse disconnect_client(ClientDisconnectRequest);
+}

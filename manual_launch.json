@@ -1,0 +1,56 @@
+{
+  "template": "small",
+  "world": {
+    "chunkEdgeLengthMeters": 50,
+    "snapshots": {
+      "snapshotWritePeriodSeconds": 0
+    },
+    "dimensions": {
+      "xMeters": 1500,
+      "zMeters": 1500
+    }
+  },
+  "workers": [
+    {
+      "worker_type": "UnityWorker",
+      "load_balancing": {
+        "dynamic_loadbalancer": {
+          "worker_scaler_config": {
+            "constant_config": {
+              "num_workers": 0
+             }
+           },
+           "worker_placer_config": {
+             "random_params": {}
+           },
+           "loadbalancer_config": {
+             "min_range_meters": 500.0,
+             "max_range_meters": 5000.0,
+             "speed_meters_per_second": 100.0,
+             "expansion_time_millis": 60000
+           }
+          }
+        },
+      "permissions": [{
+        "all": {}
+      }]
+    },
+    {
+      "worker_type": "UnityClient",
+      "permissions": [{
+        "entity_creation": {
+          "allow": false
+        },
+        "entity_deletion": {
+          "allow": false
+        },
+        "entity_query": {
+          "allow": true,
+          "components": [
+              "*"
+          ]
+        }
+      }]
+    }
+  ]
+}

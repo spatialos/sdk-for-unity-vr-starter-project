@@ -1,0 +1,23 @@
+package improbable.player;
+
+enum ControllerSide {
+  LEFT = 0;
+  RIGHT = 1;
+}
+
+type GrabRequestEvent {
+  EntityId grabbed_entity_id = 1;
+  ControllerSide controller_side = 2;
+}
+
+type DropRequestEvent {
+  EntityId dropped_entity_id = 1;
+}
+
+component Grab {
+  id = 1005;
+  map<ControllerSide, EntityId> held_entities = 1;
+
+  event GrabRequestEvent grab_request;
+  event DropRequestEvent drop_request;
+}

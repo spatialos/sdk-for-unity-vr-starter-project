@@ -1,0 +1,60 @@
+{
+  "build": {
+    "tasks_filename": "spatialos.unity.client.build.json",
+    "generated_build_scripts_type": "unity"
+  },
+  "bridge": {
+    "worker_attribute_set": {
+      "attributes": [
+        "visual"
+      ]
+    },
+    "entity_interest": {
+      "range_entity_interest": {
+        "radius": 200
+      }
+    },
+    "streaming_query": [],
+    "component_delivery": {
+      "default": "RELIABLE_ORDERED",
+      "checkout_all_initially": true
+    }
+  },
+  "external": {
+    "default": {
+      "run_type": "EXECUTABLE",
+      "windows": {
+        "command": "build/worker/UnityClient@Windows/UnityClient@Windows.exe",
+        "arguments": [
+          "+assemblyName",
+          "local_assembly",
+          "+workerType",
+          "UnityClient",
+          "+infraServicesUrl",
+          "http://127.0.0.1:21000",
+          "+appName",
+          "${IMPROBABLE_PROJECT_NAME}",
+          "-logfile",
+          "external-default-unityclient.log"
+        ]
+      },
+      "macos": {
+        "command": "open",
+        "arguments": [
+          "./build/worker/UnityClient@Mac/UnityClient@Mac.app",
+          "--args",
+          "+assemblyName",
+          "local_assembly",
+          "+workerType",
+          "UnityClient",
+          "+infraServicesUrl",
+          "http://127.0.0.1:21000",
+          "+appName",
+          "${IMPROBABLE_PROJECT_NAME}",
+          "-logfile",
+          "external-default-unityclient.log"
+        ]
+      }
+    }
+  }
+}

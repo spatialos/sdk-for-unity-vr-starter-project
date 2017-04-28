@@ -1,0 +1,16 @@
+package improbable.global;
+
+import "improbable/global/Quaternion.schema";
+import "improbable/player/Grab.schema";
+
+type CurrentGrabberInfo {
+  EntityId grabber_entity = 1;
+  improbable.player.ControllerSide controller_side = 2;
+  Vector3f relative_position = 3;
+  Quaternion relative_orientation = 4;
+}
+
+component Grabbable {
+  id = 1004;
+  option<CurrentGrabberInfo> current_grabber_info = 1;
+}

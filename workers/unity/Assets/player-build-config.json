@@ -1,0 +1,36 @@
+{
+  "Global": {
+    "Plugin": {
+      "UsePlatformDirectories": true
+    }
+  },
+  "Deploy": {
+    "UnityWorker": {
+      "Targets": [
+        "StandaloneLinux64?EnableHeadlessMode"
+      ],
+      "Assets": "Streaming"
+    },
+    "UnityClient": {
+      "Targets": [
+        "StandaloneWindows",
+        "StandaloneOSXIntel64"
+      ],
+      "Assets": "Streaming"
+    }
+  },
+  "Develop": {
+    "UnityWorker": {
+      "Targets": [
+        "Current"
+      ],
+      "Assets": "Streaming"
+    },
+    "UnityClient": {
+      "Targets": [
+        "Current"
+      ],
+      "Assets": "Streaming"
+    }
+  }
+}

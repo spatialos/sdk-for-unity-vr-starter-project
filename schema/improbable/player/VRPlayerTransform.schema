@@ -1,0 +1,13 @@
+package improbable.player;
+
+type TransformOffset  {
+    Vector3f position = 1;
+    Vector3f rotation = 2;
+}
+
+component VRPeripheralOffsets {
+    id = 1100;
+    TransformOffset head = 1;
+    TransformOffset left_controller = 2;
+    TransformOffset right_controller = 3;
+}
