@@ -2,6 +2,7 @@ package improbable.global;
 
 import "improbable/global/Quaternion.schema";
 import "improbable/player/Grab.schema";
+import "improbable/vector3.schema";
 
 type CurrentGrabberInfo {
   EntityId grabber_entity = 1;

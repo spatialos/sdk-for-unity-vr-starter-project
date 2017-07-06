@@ -1,4 +1,5 @@
 ﻿using Assets.Gamelogic.Utils;
+using Improbable;
 using Improbable.General;
 using UnityEngine;
 using Improbable.Unity.Visualizer;
@@ -7,35 +8,37 @@ namespace Assets.Gamelogic.Global
 {
     public class TransformReceiver : MonoBehaviour
     {
-        [Require]
-        private WorldTransform.Reader WorldTransformReader;
+
+        [Require] private Position.Reader PositionReader;
+        [Require] private Rotation.Reader RotationReader;
 
         private void OnEnable()
         {
-            transform.rotation = MathUtils.ToUnityQuaternion(WorldTransformReader.Data.rotation);
-            transform.position = WorldTransformReader.Data.position.ToVector3();
+            transform.position = PositionReader.Data.coords.ToUnityVector();
+            transform.rotation = MathUtils.ToUnityQuaternion(RotationReader.Data.rotation);
 
-            WorldTransformReader.ComponentUpdated.Add(OnComponentUpdated);
+            PositionReader.ComponentUpdated.Add(OnPositionUpdate);
+            RotationReader.ComponentUpdated.Add(OnRotationUpdate);
         }
 
         private void OnDisable()
         {
-            WorldTransformReader.ComponentUpdated.Remove(OnComponentUpdated);
+            PositionReader.ComponentUpdated.Remove(OnPositionUpdate);
+            RotationReader.ComponentUpdated.Remove(OnRotationUpdate);
+        }
+        private void OnPositionUpdate(Position.Update update)
+        {
+            if (!PositionReader.HasAuthority && update.coords.HasValue)
+            {
+                transform.position = update.coords.Value.ToUnityVector();
+            }
         }
 
-        private void OnComponentUpdated(WorldTransform.Update update)
+        private void OnRotationUpdate(Rotation.Update update)
         {
-            if (!WorldTransformReader.HasAuthority)
+            if (!RotationReader.HasAuthority && update.rotation.HasValue)
             {
-                if (update.position.HasValue)
-                {
-                    transform.position = update.position.Value.ToVector3();
-                }
-                if (update.rotation.HasValue)
-                {
-                    var rotation = update.rotation.Value;
-                    transform.rotation = new Quaternion(rotation.x, rotation.y, rotation.z, rotation.w);
-                }
+                transform.rotation = MathUtils.ToUnityQuaternion(update.rotation.Value);
             }
         }
     }

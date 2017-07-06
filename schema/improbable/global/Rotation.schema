@@ -1,0 +1,8 @@
+package improbable.general;
+
+import "improbable/global/Quaternion.schema";
+
+component Rotation {
+    id = 1000;
+    improbable.global.Quaternion rotation = 1;
+}

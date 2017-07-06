@@ -1,5 +1,7 @@
 package improbable.player;
 
+import "improbable/vector3.schema";
+
 type TransformOffset  {
     Vector3f position = 1;
     Vector3f rotation = 2;

@@ -1,4 +1,4 @@
-using Improbable.Math;
+using Improbable;
 using UnityEngine;
 
 namespace Assets.Gamelogic.Utils
@@ -28,7 +28,7 @@ namespace Assets.Gamelogic.Utils
                 && ApproximatelyEqual(a.Z, b.Z);
         }
 
-        public static bool ApproximatelyEqual(Coordinates a, Coordinates b)
+        public static bool ApproximatelyEqual(Improbable.Coordinates a, Improbable.Coordinates b)
         {
             return ApproximatelyEqual(a.X, b.X)
                 && ApproximatelyEqual(a.Y, b.Y)
@@ -55,7 +55,7 @@ namespace Assets.Gamelogic.Utils
             return new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
         }
 
-        public static Improbable.Global.Quaternion ToNativeQuaternion(Quaternion quaternion)
+        public static Improbable.Global.Quaternion ToSpatialQuaternion(Quaternion quaternion)
         {
             return new Improbable.Global.Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
         }
@@ -63,22 +63,14 @@ namespace Assets.Gamelogic.Utils
 
     public static class Vector3Extensions
     {
-        public static Coordinates ToCoordinates(this Vector3 vector3)
+        public static Improbable.Coordinates ToCoordinates(this Vector3 vector3)
         {
-            return new Coordinates(vector3.x, vector3.y, vector3.z);
+            return new Improbable.Coordinates(vector3.x, vector3.y, vector3.z);
         }
 
         public static Vector3f ToVector3f(this Vector3 vector3)
         {
             return new Vector3f(vector3.x, vector3.y, vector3.z);
-        }
-    }
-
-    public static class CoordinatesExtensions
-    {
-        public static Vector3 ToVector3(this Coordinates coordinates)
-        {
-            return new Vector3((float)coordinates.X, (float)coordinates.Y, (float)coordinates.Z);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Assets.Gamelogic.Utils;
+using Improbable;
 using Improbable.General;
-using Improbable.Math;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
@@ -8,41 +8,30 @@ namespace Assets.Gamelogic.Global
 {
     public class TransformSender : MonoBehaviour
     {
-        [Require]
-        private WorldTransform.Writer WorldTransformWriter;
+        [Require] private Position.Writer PositionWriter;
+        [Require] private Rotation.Writer RotationWriter;
 
         private void Update()
         {
-            var transformUpdate = new WorldTransform.Update();
-            var newPosition = transform.position.ToCoordinates();
-            var newRotation = transform.rotation;
-
-            var updatedTransform = false;
-            if (PositionNeedsUpdate(newPosition))
-            {
-                transformUpdate.SetPosition(newPosition);
-                updatedTransform = true;
+            var newCoords = transform.position.ToCoordinates();
+            if (PositionNeedsUpdate(newCoords)) {
+                PositionWriter.Send(new Position.Update().SetCoords(newCoords));
             }
+
+            var newRotation = transform.rotation;
             if (RotationNeedsUpdate(newRotation))
             {
-                transformUpdate.SetRotation(MathUtils.ToNativeQuaternion(transform.rotation));
-                updatedTransform = true;
-            }
-
-            if (updatedTransform)
-            {
-                WorldTransformWriter.Send(transformUpdate);
+                RotationWriter.Send(new Rotation.Update().SetRotation(MathUtils.ToSpatialQuaternion(transform.rotation)));
             }
         }
 
-        private bool PositionNeedsUpdate(Coordinates newPosition)
+        private bool PositionNeedsUpdate(Coordinates newCoords)
         {
-            return !MathUtils.ApproximatelyEqual(newPosition, WorldTransformWriter.Data.position);
+            return !MathUtils.ApproximatelyEqual(newCoords, PositionWriter.Data.coords);
         }
-
         private bool RotationNeedsUpdate(Quaternion newRotation)
         {
-            return !MathUtils.ApproximatelyEqual(newRotation, MathUtils.ToUnityQuaternion(WorldTransformWriter.Data.rotation));
+            return !MathUtils.ApproximatelyEqual(newRotation, MathUtils.ToUnityQuaternion(RotationWriter.Data.rotation));
         }
     }
 }

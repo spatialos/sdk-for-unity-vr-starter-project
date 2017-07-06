@@ -13,23 +13,17 @@ public class SteamVR : System.IDisposable
 	// to activate it in the process.
 	public static bool active { get { return _instance != null; } }
 
-    // Set this to false to keep from auto-initializing when calling SteamVR.instance.
-    private static bool _enabled = true;
+	// Set this to false to keep from auto-initializing when calling SteamVR.instance.
+	private static bool _enabled = true;
 	public static bool enabled
 	{
 		get
 		{
-#if UNITY_STANDALONE_LINUX
-            return false;
-#else
-
-			if (!UnityEngine.VR.VRSettings.enabled) {
+			if (!UnityEngine.VR.VRSettings.enabled)
 				enabled = false;
-            }
 			return _enabled;
-#endif
-        }
-        set
+		}
+		set
 		{
 			_enabled = value;
 			if (!_enabled)
@@ -43,17 +37,13 @@ public class SteamVR : System.IDisposable
 		get
 		{
 #if UNITY_EDITOR
-		    if (!Application.isPlaying)
-		    {
-		        return null;
-		    }
+			if (!Application.isPlaying)
+				return null;
 #endif
-		    if (!enabled)
-		    {
-		        return null;
-		    }
+			if (!enabled)
+				return null;
 
-		    if (_instance == null)
+			if (_instance == null)
 			{
 				_instance = CreateInstance();
 
@@ -67,18 +57,11 @@ public class SteamVR : System.IDisposable
 	}
 
 	public static bool usingNativeSupport
-    {
-	    get
-	    {
-            #if UNITY_STANDALONE_LINUX
-	            return false;
-            #else
-		        return UnityEngine.VR.VRDevice.GetNativePtr() != System.IntPtr.Zero; 
-            #endif
-	    }
+	{
+		get { return UnityEngine.VR.VRDevice.GetNativePtr() != System.IntPtr.Zero; }
 	}
 
-    public static SteamVR CreateInstance()
+	static SteamVR CreateInstance()
 	{
 		try
 		{
@@ -178,26 +161,26 @@ public class SteamVR : System.IDisposable
 		return null;
 	}
 
-	string GetStringProperty(ETrackedDeviceProperty prop)
+	public string GetStringProperty(ETrackedDeviceProperty prop, uint deviceId = OpenVR.k_unTrackedDeviceIndex_Hmd)
 	{
 		var error = ETrackedPropertyError.TrackedProp_Success;
-		var capactiy = hmd.GetStringTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, prop, null, 0, ref error);
+		var capactiy = hmd.GetStringTrackedDeviceProperty(deviceId, prop, null, 0, ref error);
 		if (capactiy > 1)
 		{
 			var result = new System.Text.StringBuilder((int)capactiy);
-			hmd.GetStringTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, prop, result, capactiy, ref error);
+			hmd.GetStringTrackedDeviceProperty(deviceId, prop, result, capactiy, ref error);
 			return result.ToString();
 		}
 		return (error != ETrackedPropertyError.TrackedProp_Success) ? error.ToString() : "<unknown>";
 	}
 
-	float GetFloatProperty(ETrackedDeviceProperty prop)
+	public float GetFloatProperty(ETrackedDeviceProperty prop, uint deviceId = OpenVR.k_unTrackedDeviceIndex_Hmd)
 	{
 		var error = ETrackedPropertyError.TrackedProp_Success;
-		return hmd.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, prop, ref error);
+		return hmd.GetFloatTrackedDeviceProperty(deviceId, prop, ref error);
 	}
 
-#region Event callbacks
+	#region Event callbacks
 
 	private void OnInitializing(bool initializing)
 	{
@@ -262,7 +245,7 @@ public class SteamVR : System.IDisposable
 		}
 	}
 
-#endregion
+	#endregion
 
 	private SteamVR()
 	{

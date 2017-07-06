@@ -17,6 +17,10 @@ Assembly-CSharp-firstpass.csproj
 Assembly-CSharp.csproj
 .spatialos
 
+# Improbable Generated Build Scripts for Unity
+spatialos.unity.client.build.json
+spatialos.unity.worker.build.json
+
 # Standard Unity Ignores
 /[Ll]ibrary/
 /[Tt]emp/

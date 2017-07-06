@@ -1,6 +1,7 @@
 ﻿using Assets.Gamelogic.Global;
 using Assets.Gamelogic.Player;
 using Assets.Gamelogic.Utils;
+using Improbable;
 using Improbable.General;
 using Improbable.Global;
 using Improbable.Unity.Common.Core.Math;
@@ -13,7 +14,8 @@ namespace Assets.Gamelogic.Grabbing
     public class GrabbableTransformHandler : MonoBehaviour
     {
         [Require] private Grabbable.Reader GrabbableReader;
-        [Require] private WorldTransform.Reader WorldTransformReader;
+        [Require] private Position.Reader PositionReader;
+        [Require] private Rotation.Reader RotationReader;
 
         private GameObject grabberControllerGameObject;
         private Vector3 smoothedVelocity;
@@ -23,21 +25,23 @@ namespace Assets.Gamelogic.Grabbing
 
         private void OnEnable()
         {
-            transform.position = WorldTransformReader.Data.position.ToVector3();
-            transform.rotation = MathUtils.ToUnityQuaternion(WorldTransformReader.Data.rotation);
+            transform.position = PositionReader.Data.coords.ToUnityVector();
+            transform.rotation = MathUtils.ToUnityQuaternion(RotationReader.Data.rotation);
 
             previousPosition = transform.position;
             smoothedVelocity = Vector3.zero;
             UpdateGrabberObject();
 
             GrabbableReader.ComponentUpdated.Add(OnGrabbableUpdate);
-            WorldTransformReader.ComponentUpdated.Add(OnTransformUpdate);
+            PositionReader.ComponentUpdated.Add(OnPositionUpdate);
+            RotationReader.ComponentUpdated.Add(OnRotationUpdate);
         }
 
         private void OnDisable()
         {
             GrabbableReader.ComponentUpdated.Remove(OnGrabbableUpdate);
-            WorldTransformReader.ComponentUpdated.Remove(OnTransformUpdate);
+            PositionReader.ComponentUpdated.Remove(OnPositionUpdate);
+            RotationReader.ComponentUpdated.Remove(OnRotationUpdate);
         }
 
         private void OnGrabbableUpdate(Grabbable.Update update)
@@ -45,14 +49,21 @@ namespace Assets.Gamelogic.Grabbing
             UpdateGrabberObject();
         }
 
-        private void OnTransformUpdate(WorldTransform.Update update)
+        private void OnPositionUpdate(Position.Update update)
         {
-            if (!CurrentlyBeingHeld() && !WorldTransformReader.HasAuthority)
+            if (!CurrentlyBeingHeld() && !PositionReader.HasAuthority)
             {
-                if (update.position.HasValue)
+                if (update.coords.HasValue)
                 {
-                    transform.position = update.position.Value.ToVector3();
+                    transform.position = update.coords.Value.ToUnityVector();
                 }
+            }
+        }
+
+        private void OnRotationUpdate(Rotation.Update update)
+        {
+            if (!CurrentlyBeingHeld() && !RotationReader.HasAuthority)
+            {
                 if (update.rotation.HasValue)
                 {
                     transform.rotation = MathUtils.ToUnityQuaternion(update.rotation.Value);
@@ -95,7 +106,7 @@ namespace Assets.Gamelogic.Grabbing
             if (grabberControllerGameObject != null)
             {
                 grabberControllerGameObject = null;
-                if (WorldTransformReader.HasAuthority)
+                if (PositionReader.HasAuthority)
                 {
                     modelRigidbody.isKinematic = false;
                     modelRigidbody.useGravity = true;

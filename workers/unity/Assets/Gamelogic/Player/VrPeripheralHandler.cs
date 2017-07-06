@@ -48,8 +48,8 @@ namespace Assets.Gamelogic.Player
 
         private bool ShouldUpdateOffset(Transform currentElementTransform, TransformOffset previousElementOffset, ref TransformOffset newOffset)
         {
-            newOffset.position = currentElementTransform.localPosition.ToNativeVector3f();
-            newOffset.rotation = currentElementTransform.localRotation.eulerAngles.ToNativeVector3f();
+            newOffset.position = currentElementTransform.localPosition.ToSpatialVector3f();
+            newOffset.rotation = currentElementTransform.localRotation.eulerAngles.ToSpatialVector3f();
             return !(MathUtils.ApproximatelyEqual(newOffset.position, previousElementOffset.position)
                 && MathUtils.ApproximatelyEqual(newOffset.rotation, previousElementOffset.rotation));
         }

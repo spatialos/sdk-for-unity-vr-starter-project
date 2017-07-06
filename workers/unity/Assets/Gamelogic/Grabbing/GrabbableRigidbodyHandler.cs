@@ -1,4 +1,5 @@
-﻿using Improbable.General;
+﻿using Improbable;
+using Improbable.General;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Assets.Gamelogic.Grabbing
 {
     public class GrabbableRigidbodyHandler : MonoBehaviour {
 
-        [Require] private WorldTransform.Writer WorldTransformWriter;
+        [Require] private Position.Writer PositionWriter;
 
         [SerializeField] private Rigidbody modelRigidbody;
 

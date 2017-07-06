@@ -3,9 +3,9 @@ using Improbable;
 using Improbable.General;
 using Improbable.Worker;
 using Improbable.Global;
-using Improbable.Math;
 using Improbable.Player;
 using Improbable.Unity.Core.Acls;
+using Improbable.Unity.Entity;
 using Improbable.Collections;
 using UnityEngine;
 using Quaternion = Improbable.Global.Quaternion;
@@ -15,81 +15,80 @@ namespace Assets.Gamelogic.EntityTemplates
 {
     public class EntityTemplateFactory : MonoBehaviour
     {
-        public static SnapshotEntity CreatePlayerCreatorTemplate()
+        public static Entity CreatePlayerCreatorTemplate()
         {
-            var entityTemplate = new SnapshotEntity { Prefab = SimulationSettings.PlayerCreatorPrefabName };
-
-            entityTemplate.Add(new WorldTransform.Data(Coordinates.ZERO, new Quaternion(0,0,0,0)));
-            entityTemplate.Add(new PlayerCreation.Data());
-
-            var acl = Acl.GenerateServerAuthoritativeAcl(entityTemplate);
-            entityTemplate.SetAcl(acl);
+            var entityTemplate = EntityBuilder.Begin()
+                .AddPositionComponent(Improbable.Coordinates.ZERO.ToUnityVector(), CommonRequirementSets.PhysicsOnly)
+                .AddMetadataComponent(entityType: SimulationSettings.PlayerCreatorPrefabName)
+                .SetPersistence(true)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .AddComponent(new Rotation.Data(new Quaternion(0,0,0,0)), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new PlayerCreation.Data(), CommonRequirementSets.PhysicsOnly)
+                .Build();
 
             return entityTemplate;
         }
 
         public static Entity CreateVrPlayerTemplate(string clientId)
         {
-            var entityTemplate = new SnapshotEntity { Prefab = SimulationSettings.VrPlayerPrefabName };
-
-            entityTemplate.Add(new WorldTransform.Data(Coordinates.ZERO, new Quaternion(0, 0, 0, 0)));
-            entityTemplate.Add(new VRPeripheralOffsets.Data(new TransformOffset(Vector3f.ZERO, Vector3f.ZERO), new TransformOffset(Vector3f.ZERO, Vector3f.ZERO), new TransformOffset(Vector3f.ZERO, Vector3f.ZERO)));
-            entityTemplate.Add(new ClientAuthorityCheck.Data());
-            entityTemplate.Add(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout));
-            entityTemplate.Add(new Grab.Data(new Map<ControllerSide, EntityId>()));
-
-            var acl = Acl.Build()
-                .SetReadAccess(CommonRequirementSets.PhysicsOrVisual)
-                .SetWriteAccess<WorldTransform>(CommonRequirementSets.SpecificClientOnly(clientId))
-                .SetWriteAccess<VRPeripheralOffsets>(CommonRequirementSets.SpecificClientOnly(clientId))
-                .SetWriteAccess<ClientAuthorityCheck>(CommonRequirementSets.SpecificClientOnly(clientId))
-                .SetWriteAccess<ClientConnection>(CommonRequirementSets.PhysicsOnly)
-                .SetWriteAccess<Grab>(CommonRequirementSets.SpecificClientOnly(clientId));
-            entityTemplate.SetAcl(acl);
-
-            return entityTemplate;
-        }
-
-        public static Entity CreateSpecatorPlayerTemplate(string clientId)
-        {
-            var entityTemplate = new SnapshotEntity { Prefab = SimulationSettings.SpectatorPlayerPrefabName };
-
-            entityTemplate.Add(new WorldTransform.Data(Coordinates.ZERO + new Vector3d(0,4,0), new Quaternion(0, 0, 0, 0)));
-            entityTemplate.Add(new ClientAuthorityCheck.Data());
-            entityTemplate.Add(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout));
-
-            var acl = Acl.Build()
-                .SetReadAccess(CommonRequirementSets.PhysicsOrVisual)
-                .SetWriteAccess<WorldTransform>(CommonRequirementSets.SpecificClientOnly(clientId))
-                .SetWriteAccess<ClientAuthorityCheck>(CommonRequirementSets.SpecificClientOnly(clientId))
-                .SetWriteAccess<ClientConnection>(CommonRequirementSets.PhysicsOnly);
-            entityTemplate.SetAcl(acl);
+            var entityTemplate = EntityBuilder.Begin()
+                .AddPositionComponent(Improbable.Coordinates.ZERO.ToUnityVector(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddMetadataComponent(entityType: SimulationSettings.VrPlayerPrefabName)
+                .SetPersistence(false)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .AddComponent(new Rotation.Data(new Quaternion(0, 0, 0, 0)), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new VRPeripheralOffsets.Data(
+                    head: new TransformOffset(Improbable.Vector3f.ZERO, Improbable.Vector3f.ZERO),
+                    leftController: new TransformOffset(Improbable.Vector3f.ZERO, Improbable.Vector3f.ZERO),
+                    rightController: new TransformOffset(Improbable.Vector3f.ZERO, Improbable.Vector3f.ZERO)
+                ), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new Grab.Data(new Map<ControllerSide, EntityId>()), CommonRequirementSets.SpecificClientOnly(clientId))
+                .Build();
 
             return entityTemplate;
         }
 
-        public static SnapshotEntity CreateCubeEntityTemplate(Coordinates spawnPosition)
+        public static Entity CreateSpectatorPlayerTemplate(string clientId)
         {
-            var entityTemplate = new SnapshotEntity { Prefab = SimulationSettings.CubePrefabName };
-
-            entityTemplate.Add(new WorldTransform.Data(spawnPosition, new Quaternion(0, 0, 0, 0)));
-            entityTemplate.Add(new Grabbable.Data(new Option<CurrentGrabberInfo>()));
-
-            var acl = Acl.GenerateServerAuthoritativeAcl(entityTemplate);
-            entityTemplate.SetAcl(acl);
+            var entityTemplate = EntityBuilder.Begin()
+                .AddPositionComponent((Improbable.Coordinates.ZERO + new Vector3d(0, 4, 0)).ToUnityVector(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddMetadataComponent(entityType: SimulationSettings.SpectatorPlayerPrefabName)
+                .SetPersistence(false)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .AddComponent(new Rotation.Data(new Quaternion(0, 0, 0, 0)), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
+                .Build();
 
             return entityTemplate;
         }
 
-        public static SnapshotEntity CreateArmchairEntityTemplate(Coordinates spawnPosition, float rotation)
+        public static Entity CreateCubeEntityTemplate(Improbable.Coordinates spawnPosition)
         {
-            var entityTemplate = new SnapshotEntity { Prefab = SimulationSettings.ArmchairPrefabName };
+            var entityTemplate = EntityBuilder.Begin()
+                .AddPositionComponent(spawnPosition.ToUnityVector(), CommonRequirementSets.PhysicsOnly)
+                .AddMetadataComponent(entityType: SimulationSettings.CubePrefabName)
+                .SetPersistence(true)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .AddComponent(new Rotation.Data(new Quaternion(0, 0, 0, 0)), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new Grabbable.Data(new Option<CurrentGrabberInfo>()), CommonRequirementSets.PhysicsOnly)
+                .Build();
 
-            entityTemplate.Add(new WorldTransform.Data(spawnPosition, MathUtils.ToNativeQuaternion(UnityEngine.Quaternion.Euler(0, rotation, 0))));
-            entityTemplate.Add(new Grabbable.Data(new Option<CurrentGrabberInfo>()));
+            return entityTemplate;
+        }
 
-            var acl = Acl.GenerateServerAuthoritativeAcl(entityTemplate);
-            entityTemplate.SetAcl(acl);
+        public static Entity CreateArmchairEntityTemplate(Improbable.Coordinates spawnPosition, float rotation)
+        {
+            var entityTemplate = EntityBuilder.Begin()
+                .AddPositionComponent(spawnPosition.ToUnityVector(), CommonRequirementSets.PhysicsOnly)
+                .AddMetadataComponent(entityType: SimulationSettings.ArmchairPrefabName)
+                .SetPersistence(true)
+                .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
+                .AddComponent(new Rotation.Data(MathUtils.ToSpatialQuaternion(UnityEngine.Quaternion.Euler(0, rotation, 0))), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new Grabbable.Data(new Option<CurrentGrabberInfo>()), CommonRequirementSets.PhysicsOnly)
+                .Build();
 
             return entityTemplate;
         }

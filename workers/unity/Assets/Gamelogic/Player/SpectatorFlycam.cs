@@ -1,4 +1,5 @@
 ﻿using Assets.Gamelogic.Utils;
+using Improbable;
 using Improbable.General;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
@@ -7,7 +8,8 @@ namespace Assets.Gamelogic.Player
 {
     public class SpectatorFlycam : MonoBehaviour
     {
-        [Require] private WorldTransform.Writer WorldTransformWriter;
+        [Require] private Position.Writer PositionWriter;
+        [Require] private Rotation.Writer RotationWriter;
 
         private float yaw;
         private float pitch;
@@ -26,7 +28,8 @@ namespace Assets.Gamelogic.Player
             HandleRotationMovement();
             HandlePositionMovement();
             var rot = transform.rotation;
-            WorldTransformWriter.Send(new WorldTransform.Update().SetPosition(transform.position.ToCoordinates()).SetRotation(new Improbable.Global.Quaternion(rot.x, rot.y, rot.z, rot.w)));
+            PositionWriter.Send(new Position.Update().SetCoords(transform.position.ToCoordinates()));
+            RotationWriter.Send(new Rotation.Update().SetRotation(new Improbable.Global.Quaternion(rot.x, rot.y, rot.z, rot.w)));
         }
 
         private void HandlePositionMovement()

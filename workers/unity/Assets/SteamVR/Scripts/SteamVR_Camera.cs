@@ -31,27 +31,15 @@ public class SteamVR_Camera : MonoBehaviour
 
 	public bool wireframe = false;
 
-#if UNITY_STANDALONE_LINUX
 	static public float sceneResolutionScale
-	{
-		get {
-            return 1f;
-        }
-		set
-        {
-        }
-	}
-#else
-    static public float sceneResolutionScale
 	{
 		get { return UnityEngine.VR.VRSettings.renderScale; }
 		set { UnityEngine.VR.VRSettings.renderScale = value; }
 	}
-#endif
 
-    #region Enable / Disable
+	#region Enable / Disable
 
-    void OnDisable()
+	void OnDisable()
 	{
 		SteamVR_Render.Remove(this);
 	}

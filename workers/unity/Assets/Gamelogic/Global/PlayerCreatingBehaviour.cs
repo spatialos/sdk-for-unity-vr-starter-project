@@ -29,7 +29,7 @@ namespace Assets.Gamelogic.Global
         private void CreatePlayerWithReservedId(string clientWorkerId, PlayerType playerType)
         {
             SpatialOS.Commands.ReserveEntityId(PlayerCreationWriter)
-                .OnSuccess(reservedEntityId => CreatePlayer(clientWorkerId, reservedEntityId, playerType))
+                .OnSuccess(result => CreatePlayer(clientWorkerId, result.ReservedEntityId, playerType))
                 .OnFailure(failure => OnFailedReservation(failure, clientWorkerId, playerType));
         }
 
@@ -60,14 +60,14 @@ namespace Assets.Gamelogic.Global
         private void CreateVrPlayer(string clientWorkerId, EntityId entityId)
         {
             var vrPlayerEntityTemplate = EntityTemplateFactory.CreateVrPlayerTemplate(clientWorkerId);
-            SpatialOS.Commands.CreateEntity(PlayerCreationWriter, entityId, SimulationSettings.VrPlayerPrefabName, vrPlayerEntityTemplate)
+            SpatialOS.Commands.CreateEntity(PlayerCreationWriter, entityId, vrPlayerEntityTemplate)
                 .OnFailure(failure => OnFailedPlayerCreation(failure, clientWorkerId, entityId, PlayerType.VRPLAYER));
         }
 
         private void CreateSpectatorPlayer(string clientWorkerId, EntityId entityId)
         {
-            var spectatorPlayerEntityTemplate = EntityTemplateFactory.CreateSpecatorPlayerTemplate(clientWorkerId);
-            SpatialOS.Commands.CreateEntity(PlayerCreationWriter, entityId, SimulationSettings.SpectatorPlayerPrefabName, spectatorPlayerEntityTemplate)
+            var spectatorPlayerEntityTemplate = EntityTemplateFactory.CreateSpectatorPlayerTemplate(clientWorkerId);
+            SpatialOS.Commands.CreateEntity(PlayerCreationWriter, entityId, spectatorPlayerEntityTemplate)
                 .OnFailure(failure => OnFailedPlayerCreation(failure, clientWorkerId, entityId, PlayerType.SPECTATORPLAYER));
         }
 

@@ -1,5 +1,6 @@
 ﻿using Assets.Gamelogic.Global;
 using Assets.Gamelogic.Utils;
+using Improbable;
 using Improbable.General;
 using Improbable.Player;
 using Improbable.Unity.Common.Core.Math;
@@ -11,7 +12,7 @@ namespace Assets.Gamelogic.Player
     public class TeleportationHandler : MonoBehaviour
     {
         [Require]
-        private WorldTransform.Writer WorldTransformWriter;
+        private Position.Writer PositionWriter;
 
         [Require]
         private VRPeripheralOffsets.Reader VROffsetsReader;
@@ -83,7 +84,7 @@ namespace Assets.Gamelogic.Player
         private void UpdatePlayerPosition(Vector3 targetTeleportPosition)
         {
             transform.position = targetTeleportPosition;
-            WorldTransformWriter.Send(new WorldTransform.Update().SetPosition(targetTeleportPosition.ToCoordinates()));
+            PositionWriter.Send(new Position.Update().SetCoords(targetTeleportPosition.ToCoordinates()));
         }
 
         private void CreateTeleportTargeterInstance()
