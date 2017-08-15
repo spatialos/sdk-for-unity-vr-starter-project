@@ -35,7 +35,7 @@ namespace Assets.Gamelogic.Grabbing
                 var relativeOrientation = inverseControllerOrientation * gameObject.transform.rotation;
                 var relativePosition = inverseControllerOrientation * (gameObject.transform.position - controllerGameObject.transform.position);
 
-                var grabberInfo = new CurrentGrabberInfo(grabberEntityId, controllerSide, relativePosition.ToVector3f(), MathUtils.ToSpatialQuaternion(relativeOrientation));
+                var grabberInfo = new CurrentGrabberInfo(grabberEntityId, controllerSide, relativePosition.ToVector3f(), relativeOrientation.ToNativeQuaternion());
                 GrabbableWriter.Send(new Grabbable.Update().SetCurrentGrabberInfo(grabberInfo));
             }
         }

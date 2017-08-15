@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.13471113, g: 0.13512556, b: 0.13130277, a: 1}
+  m_IndirectSpecularColor: {r: 0.0917516, g: 0.09170014, b: 0.08923962, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -215,6 +215,7 @@ MonoBehaviour:
       Ip: 
       LinkProtocol: 1
       Port: 7777
+      LocatorHost: locator.improbable.io
       RaknetHeartbeatTimeoutMillis: 60000
       ReceiveQueueCapacity: 32768
       SendQueueCapacity: 16384
@@ -466,11 +467,6 @@ Prefab:
     - target: {fileID: 224505697959354564, guid: c1bf89f8015a0e64b85b1114eb96bdd9,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 223010989872471220, guid: c1bf89f8015a0e64b85b1114eb96bdd9,
-        type: 2}
-      propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

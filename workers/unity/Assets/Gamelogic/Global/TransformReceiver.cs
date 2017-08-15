@@ -15,7 +15,7 @@ namespace Assets.Gamelogic.Global
         private void OnEnable()
         {
             transform.position = PositionReader.Data.coords.ToUnityVector();
-            transform.rotation = MathUtils.ToUnityQuaternion(RotationReader.Data.rotation);
+            transform.rotation = RotationReader.Data.rotation.ToUnityQuaternion();
 
             PositionReader.ComponentUpdated.Add(OnPositionUpdate);
             RotationReader.ComponentUpdated.Add(OnRotationUpdate);
@@ -26,6 +26,7 @@ namespace Assets.Gamelogic.Global
             PositionReader.ComponentUpdated.Remove(OnPositionUpdate);
             RotationReader.ComponentUpdated.Remove(OnRotationUpdate);
         }
+
         private void OnPositionUpdate(Position.Update update)
         {
             if (!PositionReader.HasAuthority && update.coords.HasValue)
@@ -38,7 +39,7 @@ namespace Assets.Gamelogic.Global
         {
             if (!RotationReader.HasAuthority && update.rotation.HasValue)
             {
-                transform.rotation = MathUtils.ToUnityQuaternion(update.rotation.Value);
+                transform.rotation = update.rotation.Value.ToUnityQuaternion();
             }
         }
     }

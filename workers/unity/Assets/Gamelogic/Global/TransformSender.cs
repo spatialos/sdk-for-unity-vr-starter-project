@@ -21,7 +21,7 @@ namespace Assets.Gamelogic.Global
             var newRotation = transform.rotation;
             if (RotationNeedsUpdate(newRotation))
             {
-                RotationWriter.Send(new Rotation.Update().SetRotation(MathUtils.ToSpatialQuaternion(transform.rotation)));
+                RotationWriter.Send(new Rotation.Update().SetRotation(transform.rotation.ToNativeQuaternion()));
             }
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Gamelogic.Global
         }
         private bool RotationNeedsUpdate(Quaternion newRotation)
         {
-            return !MathUtils.ApproximatelyEqual(newRotation, MathUtils.ToUnityQuaternion(RotationWriter.Data.rotation));
+            return !MathUtils.ApproximatelyEqual(newRotation, RotationWriter.Data.rotation.ToUnityQuaternion());
         }
     }
 }

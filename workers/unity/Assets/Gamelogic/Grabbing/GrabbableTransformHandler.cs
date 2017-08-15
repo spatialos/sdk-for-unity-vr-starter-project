@@ -1,10 +1,8 @@
-﻿using Assets.Gamelogic.Global;
-using Assets.Gamelogic.Player;
+﻿using Assets.Gamelogic.Player;
 using Assets.Gamelogic.Utils;
 using Improbable;
 using Improbable.General;
 using Improbable.Global;
-using Improbable.Unity.Common.Core.Math;
 using Improbable.Unity.Core;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
@@ -26,7 +24,7 @@ namespace Assets.Gamelogic.Grabbing
         private void OnEnable()
         {
             transform.position = PositionReader.Data.coords.ToUnityVector();
-            transform.rotation = MathUtils.ToUnityQuaternion(RotationReader.Data.rotation);
+            transform.rotation = RotationReader.Data.rotation.ToUnityQuaternion();
 
             previousPosition = transform.position;
             smoothedVelocity = Vector3.zero;
@@ -66,7 +64,7 @@ namespace Assets.Gamelogic.Grabbing
             {
                 if (update.rotation.HasValue)
                 {
-                    transform.rotation = MathUtils.ToUnityQuaternion(update.rotation.Value);
+                    transform.rotation = update.rotation.Value.ToUnityQuaternion();
                 }
             }
         }
@@ -135,7 +133,7 @@ namespace Assets.Gamelogic.Grabbing
                 var grabberTransform = grabberControllerGameObject.transform;
 
                 transform.position = grabberTransform.position + grabberTransform.rotation * grabberInfo.relativePosition.ToUnityVector();
-                transform.rotation = grabberTransform.rotation * MathUtils.ToUnityQuaternion(grabberInfo.relativeOrientation);
+                transform.rotation = grabberTransform.rotation * grabberInfo.relativeOrientation.ToUnityQuaternion();
                 CacheCurrentVelocity(transform.position);
             }
         }

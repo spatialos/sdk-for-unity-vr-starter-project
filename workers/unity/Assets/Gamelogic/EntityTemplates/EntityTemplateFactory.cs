@@ -8,7 +8,7 @@ using Improbable.Unity.Core.Acls;
 using Improbable.Unity.Entity;
 using Improbable.Collections;
 using UnityEngine;
-using Quaternion = Improbable.Global.Quaternion;
+using Quaternion = UnityEngine.Quaternion;
 using Assets.Gamelogic.Utils;
 
 namespace Assets.Gamelogic.EntityTemplates
@@ -22,7 +22,7 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddMetadataComponent(entityType: SimulationSettings.PlayerCreatorPrefabName)
                 .SetPersistence(true)
                 .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new Rotation.Data(new Quaternion(0,0,0,0)), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new Rotation.Data(Quaternion.identity.ToNativeQuaternion()), CommonRequirementSets.PhysicsOnly)
                 .AddComponent(new PlayerCreation.Data(), CommonRequirementSets.PhysicsOnly)
                 .Build();
 
@@ -36,7 +36,7 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddMetadataComponent(entityType: SimulationSettings.VrPlayerPrefabName)
                 .SetPersistence(false)
                 .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new Rotation.Data(new Quaternion(0, 0, 0, 0)), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new Rotation.Data(Quaternion.identity.ToNativeQuaternion()), CommonRequirementSets.SpecificClientOnly(clientId))
                 .AddComponent(new VRPeripheralOffsets.Data(
                     head: new TransformOffset(Improbable.Vector3f.ZERO, Improbable.Vector3f.ZERO),
                     leftController: new TransformOffset(Improbable.Vector3f.ZERO, Improbable.Vector3f.ZERO),
@@ -57,7 +57,7 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddMetadataComponent(entityType: SimulationSettings.SpectatorPlayerPrefabName)
                 .SetPersistence(false)
                 .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new Rotation.Data(new Quaternion(0, 0, 0, 0)), CommonRequirementSets.SpecificClientOnly(clientId))
+                .AddComponent(new Rotation.Data(Quaternion.identity.ToNativeQuaternion()), CommonRequirementSets.SpecificClientOnly(clientId))
                 .AddComponent(new ClientAuthorityCheck.Data(), CommonRequirementSets.SpecificClientOnly(clientId))
                 .AddComponent(new ClientConnection.Data(SimulationSettings.TotalHeartbeatsBeforeTimeout), CommonRequirementSets.PhysicsOnly)
                 .Build();
@@ -72,7 +72,7 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddMetadataComponent(entityType: SimulationSettings.CubePrefabName)
                 .SetPersistence(true)
                 .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new Rotation.Data(new Quaternion(0, 0, 0, 0)), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new Rotation.Data(Quaternion.identity.ToNativeQuaternion()), CommonRequirementSets.PhysicsOnly)
                 .AddComponent(new Grabbable.Data(new Option<CurrentGrabberInfo>()), CommonRequirementSets.PhysicsOnly)
                 .Build();
 
@@ -86,7 +86,7 @@ namespace Assets.Gamelogic.EntityTemplates
                 .AddMetadataComponent(entityType: SimulationSettings.ArmchairPrefabName)
                 .SetPersistence(true)
                 .SetReadAcl(CommonRequirementSets.PhysicsOrVisual)
-                .AddComponent(new Rotation.Data(MathUtils.ToSpatialQuaternion(UnityEngine.Quaternion.Euler(0, rotation, 0))), CommonRequirementSets.PhysicsOnly)
+                .AddComponent(new Rotation.Data(Quaternion.Euler(0, rotation, 0).ToNativeQuaternion()), CommonRequirementSets.PhysicsOnly)
                 .AddComponent(new Grabbable.Data(new Option<CurrentGrabberInfo>()), CommonRequirementSets.PhysicsOnly)
                 .Build();
 

@@ -9,10 +9,9 @@ namespace Assets.Gamelogic.UI
 {
     public class SplashScreenController : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject NotReadyWarning;
-        [SerializeField]
-        private Button[] ConnectButtons;
+        [SerializeField] private GameObject NotReadyWarning;
+        [SerializeField] private Button[] ConnectButtons;
+        [SerializeField] private GameObject Spinner;
 
         private static SplashScreenController instance;
         private const string GameEntryGameObject = "GameEntry";
@@ -39,8 +38,9 @@ namespace Assets.Gamelogic.UI
             foreach (Button button in ConnectButtons)
             {
                 button.interactable = true;
-                button.GetComponent<CursorHoverEffect>().ShowButtonCursor();
             }
+
+            Spinner.SetActive(false);
         }
 
         private void DisableConnectButtons()
@@ -48,8 +48,9 @@ namespace Assets.Gamelogic.UI
             foreach (Button button in ConnectButtons)
             {
                 button.interactable = false;
-                button.GetComponent<CursorHoverEffect>().ShowDefaultCursor();
             }
+
+            Spinner.SetActive(true);
         }
 
         private void AttemptVrConnection()

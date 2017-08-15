@@ -49,13 +49,16 @@ namespace Assets.Gamelogic.Utils
         {
             return ApproximatelyEqual((float) a, (float) b);
         }
+    }
 
-        public static Quaternion ToUnityQuaternion(Improbable.Global.Quaternion quaternion)
+    public static class QuaternionExtensions
+    {
+        public static Quaternion ToUnityQuaternion(this Improbable.Global.Quaternion quaternion)
         {
             return new Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
         }
 
-        public static Improbable.Global.Quaternion ToSpatialQuaternion(Quaternion quaternion)
+        public static Improbable.Global.Quaternion ToNativeQuaternion(this Quaternion quaternion)
         {
             return new Improbable.Global.Quaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
         }
