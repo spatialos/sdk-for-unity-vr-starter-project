@@ -42,6 +42,8 @@ This approach to the player's position is specific to the HTC Vive with its play
 
 The main downside is that physically moving within the play area will not cause the player entity to move when seen on the [Inspector](https://spatialos.improbable.io/docs/reference/latest/tools/inspector). This may not matter much, since the the SpatialOS world will normally be orders of magnitude bigger than the average living room, so most of the player movement will be done by teleporting. We may revisit this design tradeoff in future iterations of this project.
 
+Should the framerate not update fast enough for your hardware, you can change the default framerate in workers/unity/Assets/Gamelogic/Global/SimulationSettings.cs
+
 ### Teleportation
 
 Teleportation is implemented client-side. When the player presses the trackpad on either controller, a teleport targeter is displayed. The player can move it around to choose their desired destination, and release the trackpad to perform the teleport. All of this is implemented in [`TeleportationHandler.cs`](workers/unity/Assets/Gamelogic/Player/TeleportationHandler.cs).
