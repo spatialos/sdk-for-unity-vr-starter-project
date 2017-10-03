@@ -3,6 +3,7 @@ using Improbable;
 using Improbable.General;
 using UnityEngine;
 using Improbable.Unity.Visualizer;
+using Improbable.Worker;
 
 namespace Assets.Gamelogic.Global
 {
@@ -29,7 +30,7 @@ namespace Assets.Gamelogic.Global
 
         private void OnPositionUpdate(Position.Update update)
         {
-            if (!PositionReader.HasAuthority && update.coords.HasValue)
+            if (PositionReader.Authority == Authority.NotAuthoritative && update.coords.HasValue)
             {
                 transform.position = update.coords.Value.ToUnityVector();
             }
@@ -37,7 +38,7 @@ namespace Assets.Gamelogic.Global
 
         private void OnRotationUpdate(Rotation.Update update)
         {
-            if (!RotationReader.HasAuthority && update.rotation.HasValue)
+            if (RotationReader.Authority == Authority.NotAuthoritative && update.rotation.HasValue)
             {
                 transform.rotation = update.rotation.Value.ToUnityQuaternion();
             }

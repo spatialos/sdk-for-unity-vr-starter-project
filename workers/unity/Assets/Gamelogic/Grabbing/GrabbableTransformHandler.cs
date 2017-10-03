@@ -5,6 +5,7 @@ using Improbable.General;
 using Improbable.Global;
 using Improbable.Unity.Core;
 using Improbable.Unity.Visualizer;
+using Improbable.Worker;
 using UnityEngine;
 
 namespace Assets.Gamelogic.Grabbing
@@ -49,7 +50,7 @@ namespace Assets.Gamelogic.Grabbing
 
         private void OnPositionUpdate(Position.Update update)
         {
-            if (!CurrentlyBeingHeld() && !PositionReader.HasAuthority)
+            if (!CurrentlyBeingHeld() && PositionReader.Authority == Authority.NotAuthoritative)
             {
                 if (update.coords.HasValue)
                 {
@@ -60,7 +61,7 @@ namespace Assets.Gamelogic.Grabbing
 
         private void OnRotationUpdate(Rotation.Update update)
         {
-            if (!CurrentlyBeingHeld() && !RotationReader.HasAuthority)
+            if (!CurrentlyBeingHeld() && RotationReader.Authority == Authority.NotAuthoritative)
             {
                 if (update.rotation.HasValue)
                 {
@@ -104,7 +105,7 @@ namespace Assets.Gamelogic.Grabbing
             if (grabberControllerGameObject != null)
             {
                 grabberControllerGameObject = null;
-                if (PositionReader.HasAuthority)
+                if (PositionReader.Authority == Authority.Authoritative)
                 {
                     modelRigidbody.isKinematic = false;
                     modelRigidbody.useGravity = true;
