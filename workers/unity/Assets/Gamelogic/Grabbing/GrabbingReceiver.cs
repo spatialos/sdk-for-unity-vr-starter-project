@@ -2,6 +2,7 @@
 using Improbable.Player;
 using Improbable.Unity;
 using Improbable.Unity.Core;
+using Improbable.Unity.Entity;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace Assets.Gamelogic.Grabbing
 
         private void AttemptGrab(GrabRequestEvent request)
         {
-            var grabbableGameObject = SpatialOS.Universe.Get(request.grabbedEntityId).UnderlyingGameObject;
+            var grabbableGameObject = LocalEntities.Instance.Get(request.grabbedEntityId).UnderlyingGameObject;
             if (grabbableGameObject == null)
             {
                 Debug.LogWarning("Player grab attempt couldn't find targeted grabbable entity object with id: " + request.grabbedEntityId);
@@ -53,7 +54,7 @@ namespace Assets.Gamelogic.Grabbing
 
         private void AttemptDrop(DropRequestEvent request)
         {
-            GameObject droppedGameObject = SpatialOS.Universe.Get(request.droppedEntityId).UnderlyingGameObject;
+            GameObject droppedGameObject = LocalEntities.Instance.Get(request.droppedEntityId).UnderlyingGameObject;
             if (droppedGameObject == null)
             {
                 Debug.LogWarning("Player drop attempt couldn't find targeted grabbable entity object with id: " + request.droppedEntityId);

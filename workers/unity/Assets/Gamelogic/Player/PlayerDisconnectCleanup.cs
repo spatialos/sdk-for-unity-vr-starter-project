@@ -3,6 +3,7 @@ using Assets.Gamelogic.Grabbing;
 using Improbable;
 using Improbable.Player;
 using Improbable.Unity.Core;
+using Improbable.Unity.Entity;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Assets.Gamelogic.Player
         {
             foreach (KeyValuePair<ControllerSide, EntityId> heldEntity in GrabbingReader.Data.heldEntities)
             {
-                SpatialOS.Universe.Get(heldEntity.Value).UnderlyingGameObject.GetComponent<GrabbableRequestHandler>().HandleDropRequest();
+                LocalEntities.Instance.Get(heldEntity.Value).UnderlyingGameObject.GetComponent<GrabbableRequestHandler>().HandleDropRequest();
             }
         }
     }

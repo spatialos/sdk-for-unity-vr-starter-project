@@ -4,6 +4,7 @@ using Improbable;
 using Improbable.General;
 using Improbable.Global;
 using Improbable.Unity.Core;
+using Improbable.Unity.Entity;
 using Improbable.Unity.Visualizer;
 using Improbable.Worker;
 using UnityEngine;
@@ -93,7 +94,7 @@ namespace Assets.Gamelogic.Grabbing
             var grabberEntityId = GrabbableReader.Data.currentGrabberInfo.Value.grabberEntity;
             var controllerSide = GrabbableReader.Data.currentGrabberInfo.Value.controllerSide;
 
-            var grabberObject = SpatialOS.Universe.Get(grabberEntityId).UnderlyingGameObject;
+            var grabberObject = LocalEntities.Instance.Get(grabberEntityId).UnderlyingGameObject;
             if (grabberObject != null)
             {
                 SetGrabberController(grabberObject.GetComponent<PlayerControllers>().GetController(controllerSide));

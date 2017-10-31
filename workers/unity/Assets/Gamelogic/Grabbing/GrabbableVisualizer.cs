@@ -4,6 +4,7 @@ using Improbable.Global;
 using Improbable.Player;
 using Improbable.Unity;
 using Improbable.Unity.Core;
+using Improbable.Unity.Entity;
 using Improbable.Unity.Visualizer;
 using UnityEngine;
 
@@ -48,7 +49,7 @@ namespace Assets.Gamelogic.Grabbing
                 if (previousGrabberEntityId.HasValue)
                 {
                     // Notify the previous grabber entity it no longer holds the item
-                    GameObject previousControllerGameObject = SpatialOS.Universe.Get(previousGrabberEntityId.Value).UnderlyingGameObject;
+                    GameObject previousControllerGameObject = LocalEntities.Instance.Get(previousGrabberEntityId.Value).UnderlyingGameObject;
                     GrabbingSender grabbingSender = previousControllerGameObject.GetComponent<GrabbingSender>();
 
                     // GrabbingSender will be disabled on workers not authoritative over dropped object's Grabbable 
@@ -61,7 +62,7 @@ namespace Assets.Gamelogic.Grabbing
                 if (grabberEntityId.HasValue)
                 {
                     // Update grabbing on the new game object
-                    GameObject controllerGameObject = SpatialOS.Universe.Get(grabberEntityId.Value).UnderlyingGameObject;
+                    GameObject controllerGameObject = LocalEntities.Instance.Get(grabberEntityId.Value).UnderlyingGameObject;
                     GrabbingSender grabbingSender = controllerGameObject.GetComponent<GrabbingSender>();
                     if (grabbingSender != null && grabbingSender.isActiveAndEnabled)
                     {
