@@ -27,7 +27,7 @@
       "arguments": [
         "+appName",
         "${IMPROBABLE_PROJECT_NAME}",
-        "+receptionistIp",
+        "+receptionistHost",
         "${IMPROBABLE_RECEPTIONIST_HOST}",
         "+receptionistPort",
         "${IMPROBABLE_RECEPTIONIST_PORT}",
@@ -57,7 +57,7 @@
       "arguments": [
         "+appName",
         "${IMPROBABLE_PROJECT_NAME}",
-        "+receptionistIp",
+        "+receptionistHost",
         "${IMPROBABLE_RECEPTIONIST_HOST}",
         "+receptionistPort",
         "${IMPROBABLE_RECEPTIONIST_PORT}",
@@ -87,7 +87,7 @@
       "arguments": [
         "+appName",
         "${IMPROBABLE_PROJECT_NAME}",
-        "+receptionistIp",
+        "+receptionistHost",
         "${IMPROBABLE_RECEPTIONIST_HOST}",
         "+receptionistPort",
         "${IMPROBABLE_RECEPTIONIST_PORT}",
