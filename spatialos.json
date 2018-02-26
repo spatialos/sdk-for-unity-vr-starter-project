@@ -1,8 +1,8 @@
 {
     "name": "your_project_name_here",
     "project_version": "1.0.0",
-    "sdk_version": "12.1.0",
+    "sdk_version": "12.1.1",
     "dependencies": [
-        {"name": "standard_library", "version": "12.1.0"}
+        {"name": "standard_library", "version": "12.1.1"}
     ]
 }
