@@ -8,3 +8,5 @@ workers/unity/Assets/Plugins/Improbable/Editor/Generated.meta
 workers/unity/Assets/Plugins/Improbable/Generated/
 workers/unity/Assets/Plugins/Improbable/Generated.meta
 workers/unity/Assets/Plugins/Improbable/Sdk/Dll/Generated.Code.*
+workers/unity/Assets/Plugins/Improbable/EntityPrefabs/
+workers/unity/Assets/Plugins/Improbable/EntityPrefabs.meta
