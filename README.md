@@ -27,9 +27,9 @@ If you run into problems, or want to give us feedback, please visit the [Spatial
 
 ## Running the project
 
-To run the project locally, first build it by running `spatial worker build`, then start the server with `spatial local start`. You can connect a client by opening the Unity project and pressing the play button, or by running `spatial local worker launch UnityClient default`. See the [documentation](https://docs.improbable.io/reference/latest/shared/deploy/deploy-local) for more details.
+To run the project locally, first build it by running `spatial worker build`, then start the server with `spatial local start`. You can connect a client by opening the Unity project and pressing the play button, or by running `spatial local worker launch UnityClient default`. See the [documentation](https://docs.improbable.io/reference/13.0/shared/deploy/deploy-local) for more details.
 
-To deploy the project to the cloud, first build it by running `spatial worker build -t=deployment`, then upload the assembly with `spatial cloud upload <assembly name>`, and finally deploy it with `spatial cloud launch <assembly name> <launch configuration file> <deployment name> --snapshot=<snapshot file>`. You can obtain and share links to connect to the deployment from the [console](http://console.improbable.io/projects). See the [documentation](https://spatialos.improbable.io/docs/reference/latest/shared/deploy/deploy-cloud) for more details.
+To deploy the project to the cloud, first build it by running `spatial worker build -t=deployment`, then upload the assembly with `spatial cloud upload <assembly name>`, and finally deploy it with `spatial cloud launch <assembly name> <launch configuration file> <deployment name> --snapshot=<snapshot file>`. You can obtain and share links to connect to the deployment from the [console](http://console.improbable.io/projects). See the [documentation](https://spatialos.improbable.io/docs/reference/13.0/shared/deploy/deploy-cloud) for more details.
 
 
 ## Project structure and design overview
@@ -42,7 +42,7 @@ The position of the player's head tracks that of the Vive headset, and the playe
 
 This approach to the player's position is specific to the HTC Vive with its play area. A more usual approach for SpatialOS would have the position of the player entity match the position of the player's head; however, the approach used in this project has several advantages, including a more straightforward implementation, lower bandwidth requirements (since offsets can be transmitted using smaller data types than absolute world positions), and a familiar model for experienced SteamVR developers.
 
-The main downside is that physically moving within the play area will not cause the player entity to move when seen on the [Inspector](https://spatialos.improbable.io/docs/reference/latest/shared/operate/inspector). This may not matter much, since the the SpatialOS world will normally be orders of magnitude bigger than the average living room, so most of the player movement will be done by teleporting. We may revisit this design tradeoff in future iterations of this project.
+The main downside is that physically moving within the play area will not cause the player entity to move when seen on the [Inspector](https://spatialos.improbable.io/docs/reference/13.0/shared/operate/inspector). This may not matter much, since the the SpatialOS world will normally be orders of magnitude bigger than the average living room, so most of the player movement will be done by teleporting. We may revisit this design tradeoff in future iterations of this project.
 
 Should the framerate not update fast enough for your hardware, you can change the default framerate in workers/unity/Assets/Gamelogic/Global/SimulationSettings.cs
 
