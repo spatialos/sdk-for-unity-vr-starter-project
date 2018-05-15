@@ -1,5 +1,3 @@
-**Note: This project runs on SpatialOS version 12.2.1 and not the latest version which is 13.0.0.**
-
 # Virtual Reality starter project
 
 ![Virtual Reality starter project](vrstarterproject.jpg)

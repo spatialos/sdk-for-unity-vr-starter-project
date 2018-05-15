@@ -3,9 +3,7 @@ build.json
 .invoke.log
 external-default-unityclient.log
 zip_toolbelt.log
-Improbable.meta
 Assets/Improbable
-Assets/Plugins/Improbable
 Assets/Plugins/x86/Improbable
 Assets/Plugins/x86.meta
 Assets/Plugins/x86_64/Improbable
@@ -16,10 +14,6 @@ Assembly-CSharp-Editor.csproj
 Assembly-CSharp-firstpass.csproj
 Assembly-CSharp.csproj
 .spatialos
-
-# Improbable Generated Build Scripts for Unity
-spatialos.unity.client.build.json
-spatialos.unity.worker.build.json
 
 # Standard Unity Ignores
 /[Ll]ibrary/

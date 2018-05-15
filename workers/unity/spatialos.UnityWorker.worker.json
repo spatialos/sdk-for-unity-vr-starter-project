@@ -1,7 +1,6 @@
 {
   "build": {
-    "tasks_filename": "spatialos.unity.worker.build.json",
-    "generated_build_scripts_type": "unity"
+    "tasks_filename": "Improbable/build_script/spatialos.unity.worker.build.json"
   },
   "bridge": {
     "worker_attribute_set": {
