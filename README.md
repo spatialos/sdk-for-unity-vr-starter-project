@@ -1,4 +1,9 @@
-# Virtual Reality starter project
+# SpatialOS SDK for Unity Virtual Reality Starter Project
+
+**New from October 2018: The SpatialOS GDK for Unity**<br/>
+Check out the alpha release of our [SpatialOS Game Development Kit (GDK) for Unity](https://docs.improbable.io/unity/latest/welcome). Using the Unity Entity Component System (ECS), the GDK is the next evolution in developing SpatialOS games in Unity. The SpatialOS GDK for Unity is designed to replace the SpatialOS SDK for Unity and we recommend using it over using the SDK for new game projects. See our [blog post anouncement](https://improbable.io/games/blog/spatialos-gdk-for-unity-launch?utm_medium=docs&utm_source=onboarding&utm_campaign=spatialos-gdk-unity-launch&utm_content=10-oct) for more information.
+
+---
 
 ![Virtual Reality starter project](vrstarterproject.jpg)
 
